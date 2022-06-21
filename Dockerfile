@@ -1,20 +1,33 @@
 # syntax=docker/dockerfile:1
 FROM docker.io/rockylinux/rockylinux:8
 
-# Run the core initialization script
-## Updates the OS, creates the 'steam' user, installs necessary packages, and install 'steamcmd'.
-COPY ./init.sh /tmp/init.sh
-RUN chmod +x /tmp/init.sh; \
-    /tmp/init.sh; \
-    rm /tmp/init.sh
+# Create 'steam' user account
+RUN useradd -m steam
+
+# Update any existing packages, install necessary packages, and cleanup (To reduce image size)
+RUN dnf upgrade --refresh -y; \
+    dnf install -y glibc.i686 libstdc++.i686 tar curl util-linux sudo telnet; \
+    dnf autoremove -y; \
+    dnf clean all
+
+# Download 'steamcmd', extract it, move it to the 'steam' user's home directory, and ensure it's owned by the 'steam' user.
+RUN mkdir /tmp/steamcmd && cd /tmp/steamcmd; \
+    curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -; \
+    cd /; \
+    mv /tmp/steamcmd/ /home/steam/; \
+    chown --recursive steam:steam /home/steam/steamcmd; \
+    chmod --recursive +x /home/steam/steamcmd
 
 # Set the executing user to 'steam' for all remaining operations (Including the entry point)
 USER steam
 
-# Run the initialization script for the 'steam' user
-COPY ./steamuser-init.sh /home/steam/steamuser-init.sh
-RUN /home/steam/steamuser-init.sh; \
-    rm /home/steam/steamuser-init.sh
+# Install the '7 Days to Die server'
+RUN mkdir /home/steam/7dtd-server/; \
+    /home/steam/steamcmd/steamcmd.sh +force_install_dir /home/steam/7dtd-server/ +login anonymous +app_update 294420 +quit; \
+    chmod --recursive +x /home/steam/7dtd-server/
+
+# Remove the default 'serverconfig.xml' file.
+RUN rm /home/steam/7dtd-server/serverconfig.xml
 
 # Create the directory to store user/save files
 RUN mkdir /home/steam/7dtd-files
@@ -31,6 +44,3 @@ EXPOSE 26900
 
 # Expose the port for the admin panel (By default it's 8080)
 EXPOSE 8080
-
-# Expose the port for the telnet interface (By default it's 8081)
-EXPOSE 8081
