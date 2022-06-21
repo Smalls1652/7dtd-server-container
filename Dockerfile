@@ -30,5 +30,7 @@ ENTRYPOINT [ "/bin/bash", "./startserver.sh", "-configfile=serverconfig.xml" ]
 EXPOSE 26900
 
 # Expose the port for the admin panel (By default it's 8080)
-# -- Uncomment the line below if you want to expose the admin panel --
-# EXPOSE 8080
+EXPOSE 8080
+
+# Expose the port for the telnet interface (By default it's 8081)
+EXPOSE 8081

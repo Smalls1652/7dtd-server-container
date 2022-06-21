@@ -41,7 +41,7 @@
 	<!-- Required permission level to use the admin slots above -->
 
 	<!-- Admin interfaces -->
-	<property name="ControlPanelEnabled" value="false"/>
+	<property name="ControlPanelEnabled" value="true"/>
 	<!-- Enable/Disable the web control panel -->
 	<property name="ControlPanelPort" value="8080"/>
 	<!-- Port of the control panel webpage -->
@@ -52,7 +52,7 @@
 	<!-- Enable/Disable the telnet -->
 	<property name="TelnetPort" value="8081"/>
 	<!-- Port of the telnet server -->
-	<property name="TelnetPassword" value=""/>
+	<property name="TelnetPassword" value="wololo"/>
 	<!-- Password to gain entry to telnet interface. If no password is set the server will only listen on the local loopback interface -->
 	<property name="TelnetFailedLoginLimit" value="10"/>
 	<!-- After this many wrong passwords from a single remote client the client will be blocked from connecting to the Telnet interface -->
