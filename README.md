@@ -8,13 +8,13 @@ Run a **7 Days to Die** server in a container.
 
 ## Building and running
 
->> **⚠️Note**
->>  
->> I'm personally using `podman` instead of `docker`, so change what's different for you (Typically it's just replacing `podman` with `docker`).
+> **⚠️Note**
+>  
+> I'm personally using `podman` instead of `docker`, so change what's different for you (Typically it's just replacing `podman` with `docker`).
 
->> **⚠️Note**
->>  
->> Make sure you modify the `serverconfig.xml` file to meet your needs.
+> **⚠️Note**
+>  
+> Make sure you modify the `serverconfig.xml` file to meet your needs.
 
 ```bash
 # Create a volume to store user/save data
@@ -36,6 +36,6 @@ podman create \
 podman start 7dtd-server
 ```
 
->> **⚠️Note**
->>  
->> If you're going to stop the server from running, make sure to shut it down cleanly through the web panel or the telnet interface by running the command `shutdown`.
+> **⚠️Note**
+>  
+> If you're going to stop the server from running, make sure to shut it down cleanly through the web panel or the telnet interface by running the command `shutdown`.
