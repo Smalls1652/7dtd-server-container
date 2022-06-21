@@ -1,0 +1,14 @@
+name: 7dtd-server-container
+volumes:
+  7dtd-files:
+    name: 7dtd-files
+services:
+  7dtd-server:
+    build: .
+    container_name: 7dtd-server
+    volumes:
+      - 7dtd-files:/home/steam/7dtd-files/:rw
+    ports:
+      - 26900:26900
+      - 8080:8080
+    image: "7dtdserver-image:latest"
